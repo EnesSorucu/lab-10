@@ -1,5 +1,6 @@
 package msku.ceng.madlab.week9;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
@@ -51,6 +53,8 @@ public class EditNoteFragment extends Fragment {
         if (getArguments() != null) {
             content = getArguments().getString(ARG_NOTE);
         }
+
+
     }
 
     @Override
@@ -67,6 +71,13 @@ public class EditNoteFragment extends Fragment {
         if (content != null){
             txtContent.setText(content);
         }
+
+        txtContent.requestFocus();
+        txtContent.post(() -> {
+            InputMethodManager inm = (InputMethodManager)
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inm.showSoftInput(txtContent, InputMethodManager.SHOW_IMPLICIT);
+        });
     }
 
     public String getContent(){
